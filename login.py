@@ -111,7 +111,8 @@ def login(username, pwd):
     text = result.read()
     p = re.compile('location\.replace\(\"(.*?)\"\)')
     try:
-        login_url = p.search(text).group(1)
+        login_url = p.search(text).group(1)#如果没有异常返回，说明此时已自动登录，之后只需设置url和data就可以post或者直接get，
+                                           #注意不要在request中不要设置header，这是因为cookie也是header的一部分，如果设置header会导致没有cookie，也就没有登录
         #print login_url
         urllib2.urlopen(login_url)
         print "登录成功!"
